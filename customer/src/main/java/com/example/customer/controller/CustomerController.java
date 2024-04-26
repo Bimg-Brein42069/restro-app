@@ -25,6 +25,11 @@ public class CustomerController {
         return CustServ.saveCustomer(cust);
     }
 
+    @PutMapping("/update-customer")
+    public Customer updateCustomer(@RequestBody Customer cust){
+        return CustServ.updateCustomer(cust);
+    }
+
     @GetMapping("/get-customer")
     public Optional<Customer> getDemographics(@RequestParam("id") Integer id){
         return CustServ.getDemographics(id);

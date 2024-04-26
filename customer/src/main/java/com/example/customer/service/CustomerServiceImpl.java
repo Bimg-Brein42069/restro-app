@@ -19,6 +19,17 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
+    public Customer updateCustomer(Customer cust) {
+        Optional<Customer> ec=CustRepo.findById(cust.getId());
+        if(ec.isEmpty())
+            return null;
+        Customer nc=ec.get();
+        nc.setName(cust.getName());
+        nc.setLoyalpoints(cust.getLoyalpoints());
+        return CustRepo.save(nc);
+    }
+
+    @Override
     public List<Customer> getAllCustomers(){
         return CustRepo.findAll();
     }
