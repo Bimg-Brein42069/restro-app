@@ -2,6 +2,7 @@ package com.example.reception.controller;
 
 import com.example.reception.models.Item;
 import com.example.reception.service.ItemService;
+import com.example.reception.service.OrderItemMapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,10 +11,13 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/items")
+@RequestMapping("/reception")
 public class ItemController {
     @Autowired
     private ItemService ItemServ;
+
+    @Autowired
+    private OrderItemMapService OIMServ;
 
     @GetMapping("/get-items")
     public List<Item> getItems(@RequestParam(required = false) String type1,@RequestParam(required = false) String type2){
@@ -34,4 +38,6 @@ public class ItemController {
     public Item updateItem(@RequestBody Item item){
         return ItemServ.updateItem(item);
     }
+
+
 }
