@@ -86,7 +86,30 @@ public class ReceptionController {
 
     @PostMapping("/add-item-to-order")
     OrderItemMap addItemToOrder(@RequestBody OrderItemMap oim){
+        Optional<OrderItemMap> eoim=OIMServ.findByOrderIdAndItemId(oim.getOrderId(),oim.getItemId());
+        if(eoim.isPresent()){
+            OrderItemMap noim=eoim.get();
+            noim.setItemQty(noim.getItemQty()+oim.getItemQty());
+            return OIMServ.updateOIM(noim);
+        }
         return OIMServ.createOIM(oim);
+    }
+
+    @PutMapping("/bill-order")
+    OrderRecord billOrder(@RequestBody OrderRecord ord){
+        if(ord.getBill() != -1)
+            return null;
+        List<OrderItemMap> oimmp=OIMServ.findByOrderId(ord.getId());
+        double price = 0.0, tax= 0.0;
+        for (OrderItemMap orderItemMap : oimmp) {
+            int qty = orderItemMap.getItemQty();
+            Item item = ItemServ.getItemDetails(orderItemMap.getItemId()).get();
+            price += item.getPrice() * qty;
+            tax += item.getTax() * qty;
+        }
+        ord.setBill(price);
+        ord.setTax(tax);
+        return ord;
     }
 
     @PutMapping("/update-item-of-order")

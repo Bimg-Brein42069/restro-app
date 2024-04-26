@@ -41,4 +41,16 @@ public class OrderItemMapServiceImpl implements OrderItemMapService{
     public List<OrderItemMap> findByItemId(Integer itemId) {
         return OIMRepo.findByItemId(itemId);
     }
+
+    @Override
+    public Optional<OrderItemMap> findById(Integer id) {
+        return OIMRepo.findById(id);
+    }
+
+    @Override
+    public Optional<OrderItemMap> findByOrderIdAndItemId(Integer orderId, Integer itemId) {
+        return OIMRepo.findByOrderIdAndItemId(orderId, itemId);
+    }
+
+
 }
