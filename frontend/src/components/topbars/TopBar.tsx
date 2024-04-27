@@ -1,28 +1,18 @@
-import { IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonMenuToggle, IonItem, IonLabel } from '@ionic/react';
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonMenuButton, IonButton } from '@ionic/react';
 import './TopBar.css'
 
-const TopBar: React.FC = () => {
+const Header: React.FC = () => {
 
   return (
-    <IonMenu contentId="main-content">
-      
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle className='font-bold'>Restaurant TopBar</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-
-      <IonContent className="ion-padding">
-        <IonList>
-          <IonMenuToggle>
-            <IonItem routerLink="/" routerDirection="none">
-              <IonLabel>Customer Window</IonLabel>
-            </IonItem>
-          </IonMenuToggle>
-        </IonList>
-      </IonContent>
-    </IonMenu>
+    <IonHeader>
+      <IonToolbar>
+        <IonButtons slot="start">
+          <IonMenuButton></IonMenuButton>
+        </IonButtons>
+        <IonTitle className='text-black font-bold'>Restaurant System</IonTitle>
+      </IonToolbar>
+    </IonHeader>
   );
 }
 
-export default TopBar;
+export default Header;

@@ -41,14 +41,14 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 import CustomerWindow from './pages/CustomerWindow';
-import TopBar from './components/topbars/TopBar';
-
+import SideBar from './components/sidebars/SideBar';
 setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
+  <SideBar />
     <IonReactRouter>
-        <IonRouterOutlet>
+        <IonRouterOutlet id='main-content'>
           <Route exact path="/">
             <CustomerWindow />
           </Route>

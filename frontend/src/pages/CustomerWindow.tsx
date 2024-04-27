@@ -1,6 +1,8 @@
-import { IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonGrid, IonRow, IonText, IonTitle } from '@ionic/react';
+import { IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonGrid, IonPage, IonRow, IonText, IonTitle } from '@ionic/react';
 import './CustomerWindow.css';
 import { useEffect, useState } from 'react';
+import SideBar from '../components/sidebars/SideBar';
+import TopBar from '../components/topbars/TopBar';
 
 interface ItemDetails{
   id:number,
@@ -61,6 +63,7 @@ const CustomerWindow: React.FC = () => {
 
   return (
     <div className="container">
+      <TopBar />
       {
         items.map(item => (
           <IonCard key={item.id}>
