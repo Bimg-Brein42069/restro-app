@@ -8,4 +8,5 @@ public interface TableService {
     TableStat allocateTable(TableStat tbs);
     TableStat freeTable(TableStat tbs);
     TableStat findTable(int seats);
+    TableStat updateTable(TableStat tbs,Integer orderId);
 }

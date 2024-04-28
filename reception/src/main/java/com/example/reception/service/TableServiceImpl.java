@@ -4,6 +4,7 @@ import com.example.reception.models.TableStat;
 import com.example.reception.repository.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +50,13 @@ public class TableServiceImpl implements TableService{
         List<TableStat> etbs=TableRepo.findBySeatsGreaterThanEqual(seats);
         if(etbs.isEmpty())
             return null;
-        return allocateTable(etbs.get(0));
+        TableStat ntbs=etbs.get(0);
+        return allocateTable(ntbs);
+    }
+
+    @Override
+    public TableStat updateTable(TableStat tbs,Integer orderId) {
+        tbs.setOrderId(orderId);
+        return TableRepo.save(tbs);
     }
 }

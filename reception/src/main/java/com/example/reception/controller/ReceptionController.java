@@ -136,8 +136,13 @@ public class ReceptionController {
     }
 
     @PutMapping("/book-table")
-    TableStat bookTable(@RequestBody TableStat tbs){
-        return TableServ.findTable(tbs.getSeats());
+    TableStat bookTable(@RequestParam Integer seats){
+        return TableServ.findTable(seats);
+    }
+
+    @PutMapping("/update-table")
+    TableStat updateTable(@RequestBody TableStat tbs,@RequestParam Integer orderId){
+        return TableServ.updateTable(tbs,orderId);
     }
 
     @PutMapping("/unbook-table")
