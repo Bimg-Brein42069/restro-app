@@ -1,6 +1,7 @@
-import { IonHeader, IonToolbar, IonTitle, IonButtons, IonMenuButton, IonButton } from '@ionic/react';
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonMenuButton, IonButton, IonBackButton } from '@ionic/react';
 import './TopBar.css'
 import React from 'react';
+import {caretBack} from 'ionicons/icons'
 
 const Header: React.FC = () => {
 
@@ -8,7 +9,7 @@ const Header: React.FC = () => {
     <IonHeader>
       <IonToolbar>
         <IonButtons slot="start">
-          <IonMenuButton></IonMenuButton>
+          <IonBackButton defaultHref=''></IonBackButton>
         </IonButtons>
         <IonTitle className='text-black font-bold'>Restaurant System</IonTitle>
       </IonToolbar>

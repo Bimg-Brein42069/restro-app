@@ -42,6 +42,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import CustomerWindow from './pages/CustomerWindow';
 import SideBar from './components/sidebars/SideBar';
+import React from 'react';
 setupIonicReact();
 
 const App: React.FC = () => (
