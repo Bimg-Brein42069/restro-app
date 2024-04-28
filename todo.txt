@@ -1,0 +1,21 @@
+To integrate frontend with the backend, priority:
+
+Add customer to LoyaLty Program(LYP)
+Update customer of LYP.
+
+Implement table booking and order creation.
+
+Implement protection of customer ui such that only customers with a booked table can order(for not null tableid, orderid must not be null)
+
+Implement placement of order.
+
+Add billing page:
+	Create table query and join LYP memebership screens.
+	Create bill for the order.
+	Generate the bill(Save as .pdf)
+
+Implement viewing details of all orders and orders by customer id.
+
+Implement filter in customer order items screen.
+
+Begin Authorization implementation after all other to-do tasks completed.

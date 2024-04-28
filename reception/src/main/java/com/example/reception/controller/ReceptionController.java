@@ -141,7 +141,7 @@ public class ReceptionController {
     }
 
     @PutMapping("/update-table")
-    TableStat updateTable(@RequestBody TableStat tbs,@RequestParam Integer orderId){
+    TableStat updateTable(@RequestBody TableStat tbs,@RequestParam(required = false) Integer orderId){
         return TableServ.updateTable(tbs,orderId);
     }
 

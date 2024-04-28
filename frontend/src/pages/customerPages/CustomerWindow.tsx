@@ -1,10 +1,10 @@
 import { IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonContent, IonGrid, IonPage, IonRow, IonText, IonTitle } from '@ionic/react';
 import './CustomerWindow.css';
 import { useEffect, useState } from 'react';
-import SideBar from '../components/sidebars/SideBar';
-import TopBar from '../components/topbars/TopBar';
+import SideBar from '../../components/sidebars/SideBar';
+import TopBar from '../../components/topbars/TopBar';
 import React from 'react';
-import TopBarOrder from '../components/topbars/TopBarOrder';
+import TopBarOrder from '../../components/topbars/TopBarOrder';
 import { useHistory } from 'react-router-dom';
 
 interface ItemDetails{

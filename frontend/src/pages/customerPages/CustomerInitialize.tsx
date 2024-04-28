@@ -3,6 +3,7 @@ import CustomerWindow from "./CustomerWindow";
 import './CustomerWindow.css';
 import { IonButton } from "@ionic/react";
 import { useHistory } from "react-router";
+import TopBarInit from "../../components/topbars/TopBarInit";
 
 interface ItemDetails{
     id:number,
@@ -50,15 +51,38 @@ interface ItemDetails{
 
     const startOrder = () => {
         localStorage.setItem('items',JSON.stringify(items))
+        localStorage.removeItem('succ')
         history.push("/customerUI/customer-window")
+    }
+    
+    function Sendmsg(){
+        const msglist=localStorage.getItem('succ');
+        if(!msglist){
+            return (
+                <div className='container'>
+                    <div className='ion-text-center'>
+                        <strong>Begin your enriching and captivating experience</strong>
+                        <p><IonButton onClick={startOrder}>Start Ordering</IonButton></p>
+                    </div>
+                </div>
+            )
+        }
+        const msg=JSON.parse(msglist)
+        console.log(msg.message)
+        return (
+            <div className='container'>
+                <div className='ion-text-center'>
+                    <strong>{msg.message}</strong>
+                    <p><IonButton onClick={startOrder}>Order More</IonButton></p>
+                </div>
+            </div>
+        )
     }
 
     return (
         <div className='container'>
-            <div className='ion-text-center'>
-                <strong>Begin your enriching and captivating experience</strong>
-                <p><IonButton onClick={startOrder}>Start Ordering</IonButton></p>
-            </div>
+            <TopBarInit />
+            <Sendmsg />
         </div>
     );
   }

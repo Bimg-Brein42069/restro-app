@@ -40,11 +40,16 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import CustomerWindow from './pages/CustomerWindow';
+
 import SideBar from './components/sidebars/SideBar';
 import React from 'react';
-import CustomerInitialize from './pages/CustomerInitialize';
-import OrderWindow from './pages/OrderWindow';
+import OrderWindow from './pages/customerPages/OrderWindow'
+import TableListings from './pages/bookingPages/TableListings';
+import CustomerInitialize from './pages/customerPages/CustomerInitialize';
+import CustomerWindow from './pages/customerPages/CustomerWindow';
+import ViewCustomers from './pages/lypPages/ViewCustomers';
+import AddCustomer from './pages/waiterPages/AddCustomer';
+import UpdateCustomer from './pages/waiterPages/UpdateCustomer';
 setupIonicReact();
 
 const App: React.FC = () => (
@@ -60,6 +65,18 @@ const App: React.FC = () => (
           </Route>
           <Route exact path="/customerUI/order-window">
             <OrderWindow />
+          </Route>
+          <Route exact path="/reception/table-booking">
+            <TableListings />
+          </Route>
+          <Route exact path="/customerLYP/view-customers">
+            <ViewCustomers />
+          </Route>
+          <Route exact path="/waiter/add-customer">
+            <AddCustomer />
+          </Route>
+          <Route exact path="/waiter/update-customer">
+            <UpdateCustomer />
           </Route>
         </IonRouterOutlet>
     </IonReactRouter>
