@@ -4,12 +4,11 @@ import React from 'react';
 import {caretBack} from 'ionicons/icons'
 
 const Header: React.FC = () => {
-
   return (
     <IonHeader>
       <IonToolbar>
         <IonButtons slot="start">
-          <IonBackButton defaultHref=''></IonBackButton>
+          <IonBackButton defaultHref='customer-window'></IonBackButton>
         </IonButtons>
         <IonTitle className='text-black font-bold'>Restaurant System</IonTitle>
       </IonToolbar>

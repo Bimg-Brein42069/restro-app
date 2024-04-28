@@ -16,7 +16,7 @@ const SideBar: React.FC = () => {
       <IonContent className="ion-padding">
         <IonList>
           <IonMenuToggle>
-            <IonItem routerLink="/" routerDirection="none">
+            <IonItem routerLink="/customerUi/customer-window" routerDirection="none">
               <IonLabel>Customer Window</IonLabel>
             </IonItem>
           </IonMenuToggle>

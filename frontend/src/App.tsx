@@ -43,6 +43,8 @@ import './theme/variables.css';
 import CustomerWindow from './pages/CustomerWindow';
 import SideBar from './components/sidebars/SideBar';
 import React from 'react';
+import CustomerInitialize from './pages/CustomerInitialize';
+import OrderWindow from './pages/OrderWindow';
 setupIonicReact();
 
 const App: React.FC = () => (
@@ -50,8 +52,14 @@ const App: React.FC = () => (
   <SideBar />
     <IonReactRouter>
         <IonRouterOutlet id='main-content'>
-          <Route exact path="/">
+          <Route exact path="/customerUI/">
+            <CustomerInitialize />
+          </Route>
+          <Route exact path="/customerUI/customer-window">
             <CustomerWindow />
+          </Route>
+          <Route exact path="/customerUI/order-window">
+            <OrderWindow />
           </Route>
         </IonRouterOutlet>
     </IonReactRouter>
