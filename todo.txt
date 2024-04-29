@@ -1,10 +1,10 @@
 To integrate frontend with the backend, priority:
 
-Implement table booking and order creation.
+Implement order creation after table booking.
 
 Implement protection of customer ui such that only customers with a booked table can order(for not null tableid, orderid must not be null)
 
-Implement placement of order.
+Implement adding items from cart to order.
 
 Add billing page:
 	Create table query and LYP memebership screens.
