@@ -17,6 +17,6 @@ public class TableStat {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private boolean av;
+    private int tableNo;
     private int seats;
-    private int orderId;
 }

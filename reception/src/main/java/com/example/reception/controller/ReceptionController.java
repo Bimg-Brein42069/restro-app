@@ -140,14 +140,14 @@ public class ReceptionController {
         return TableServ.findTable(seats);
     }
 
-    @PutMapping("/update-table")
-    TableStat updateTable(@RequestBody TableStat tbs,@RequestParam(required = false) Integer orderId){
-        return TableServ.updateTable(tbs,orderId);
-    }
-
     @PutMapping("/unbook-table")
     TableStat unbookTable(@RequestBody TableStat tbs){
         return TableServ.freeTable(tbs);
+    }
+
+    @GetMapping("/get-all-tables")
+    List<TableStat> getAllTables(){
+        return TableServ.getAllTables();
     }
 
 }

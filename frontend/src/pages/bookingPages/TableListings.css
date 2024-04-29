@@ -37,6 +37,17 @@
   flex: 50%;
 }
 
+.column3 {
+  flex: 50%;
+}
+
+
 .column2:ion-grid{
    width:50%
+}
+
+
+.waitlist:table-list{
+  position: absolute;
+  padding: 50%;
 }

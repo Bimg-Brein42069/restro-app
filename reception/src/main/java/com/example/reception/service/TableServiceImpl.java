@@ -47,7 +47,7 @@ public class TableServiceImpl implements TableService{
 
     @Override
     public TableStat findTable(int seats) {
-        List<TableStat> etbs=TableRepo.findBySeatsGreaterThanEqual(seats);
+        List<TableStat> etbs=TableRepo.findBySeatsGreaterThanEqualAndAvTrue(seats);
         if(etbs.isEmpty())
             return null;
         TableStat ntbs=etbs.get(0);
@@ -55,8 +55,8 @@ public class TableServiceImpl implements TableService{
     }
 
     @Override
-    public TableStat updateTable(TableStat tbs,Integer orderId) {
-        tbs.setOrderId(orderId);
-        return TableRepo.save(tbs);
+    public List<TableStat> getAllTables() {
+        return TableRepo.findAll();
     }
+
 }

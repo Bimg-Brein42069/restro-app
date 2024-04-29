@@ -7,11 +7,11 @@ Implement protection of customer ui such that only customers with a booked table
 Implement placement of order.
 
 Add billing page:
-	Create table query and join LYP memebership screens.
+	Create table query and LYP memebership screens.
 	Create bill for the order.
 	Generate the bill(Save as .pdf)
 
-Implement viewing details of all orders and orders by customer id.
+Implement viewing details of all orders and orders by customer id(2nd one done)
 
 Implement filter in customer order items screen.
 

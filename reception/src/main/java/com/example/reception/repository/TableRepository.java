@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface TableRepository extends JpaRepository<TableStat,Integer> {
-    List<TableStat> findBySeatsGreaterThanEqual(int seats);
+    List<TableStat> findBySeatsGreaterThanEqualAndAvTrue(int seats);
 }
