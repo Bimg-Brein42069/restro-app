@@ -150,4 +150,6 @@ public class ReceptionController {
         return TableServ.getAllTables();
     }
 
+    @PutMapping("/update-table")
+    TableStat updateTable(@RequestBody TableStat tbs){ return TableServ.updateTable(tbs);}
 }

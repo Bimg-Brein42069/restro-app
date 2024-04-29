@@ -11,4 +11,5 @@ public interface TableService {
     TableStat freeTable(TableStat tbs);
     TableStat findTable(int seats);
     List<TableStat> getAllTables();
+    TableStat updateTable(TableStat tbs);
 }

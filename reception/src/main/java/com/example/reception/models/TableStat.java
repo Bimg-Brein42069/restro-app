@@ -19,4 +19,5 @@ public class TableStat {
     private boolean av;
     private int tableNo;
     private int seats;
+    private int orderNo;
 }

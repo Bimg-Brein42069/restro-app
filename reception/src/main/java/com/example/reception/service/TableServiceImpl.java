@@ -42,6 +42,7 @@ public class TableServiceImpl implements TableService{
         if(ntbs.isAv())
             return null;
         ntbs.setAv(true);
+        ntbs.setOrderNo(0);
         return TableRepo.save(ntbs);
     }
 
@@ -58,5 +59,16 @@ public class TableServiceImpl implements TableService{
     public List<TableStat> getAllTables() {
         return TableRepo.findAll();
     }
+
+    @Override
+    public TableStat updateTable(TableStat tbs) {
+        Optional<TableStat> etbs=TableRepo.findById(tbs.getId());
+        if(etbs.isEmpty())
+            return null;
+        TableStat ntbs=etbs.get();
+        ntbs.setOrderNo(tbs.getOrderNo());
+        return TableRepo.save(ntbs);
+    }
+
 
 }

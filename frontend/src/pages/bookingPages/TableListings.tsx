@@ -31,12 +31,22 @@ interface TableDetail {
     tableNo:number
 }
 
+interface OrderDetail{
+    id:number,
+    custId:number,
+    bill:number,
+    tax:number
+}
+
 const TableListings: React.FC = () => {
   const [waitlist,setWaitlist] = useState<WaitlistDetail []>([]);
   const {control,handleSubmit,reset} = useForm({mode:'onSubmit'});
+  const [mkord,setMkord] = useState(false)
+  const [ord,setOrd] = useState<OrderDetail>();
+  const [tabl,setTabl] = useState<TableDetail>();
 
 
-  const onSubmit = async (data:any) => {
+  const booktable = async (data:any) => {
     try{
       const response=await fetch('http://localhost:8082/reception/book-table?seats=' + data.seats,{
         method:'PUT',
@@ -53,10 +63,91 @@ const TableListings: React.FC = () => {
         const wt=[...waitlist,data]
         setWaitlist(wt)
       }
+      else{
+        setTabl(tabl => JSON.parse(r_data))
+      }
       reset();
     }catch(error){
       console.error("Error fetching data:", error);
     }
+  }
+
+  const verify_order = async (data:any) => {
+    if(data.custId === undefined){
+      data.custId=0
+    }
+
+    try{
+      const response=await fetch('http://localhost:8081/customer/get-customer?id=' + data.custId)
+      if(!response.ok){
+        throw new Error('Failed to verify customer')
+      }
+      const r_data=await response.text()
+      if(r_data.length === 0){
+        alert('Customer does not exist on LYP, making order with null custid')
+        data.custId=0
+      }
+    }catch(error){
+      console.error("Error verifying customer")
+    }
+  }
+
+  const create_order = async (data:any) => {
+    const ord_data={
+      'custId':data.custId,
+      'bill':0.0,
+      'tax':0.0
+    }
+
+    try{
+      const response=await fetch('http://localhost:8082/reception/add-order',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify(ord_data)
+      })
+      if(!response.ok){
+        throw new Error('Failed to create order')
+      }
+      const r_data=await response.text()
+      setOrd(JSON.parse(r_data))
+    }catch(error){
+      console.error("Error creating order")
+    }
+  }
+
+  const assign_table = async() => {
+    const table_data={...tabl,orderNo:ord?.id}
+
+    try{
+      const response=await fetch('http://localhost:8082/reception/update-table',{
+        method:'PUT',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify(table_data)
+      })
+      if(!response.ok){
+        throw new Error('Failed to update table')
+      }
+      const r_data=await response.text()
+    }catch(error){
+      console.error("Error updating table")
+    }
+  }
+
+  useEffect(() => {
+    if(!tabl || tabl===undefined)
+      return ;
+    assign_table()
+  },[tabl])
+
+
+  const onSubmit = async (data:any) => {
+    booktable(data)
+    verify_order(data)
+    create_order(data)
   } 
 
   const onSubmit2 = async (data:any) => {
@@ -73,8 +164,70 @@ const TableListings: React.FC = () => {
       const r_data=await response.text()
       const wt=waitlist.filter(wat => wat.id !== data.id)
       setWaitlist(wt)
+      setTabl(JSON.parse(r_data))
     }catch(error){
       console.error("Error fetching data:", error);
+    }
+
+    
+    if(data.custId === undefined){
+      data.custId=0
+    }
+
+    try{
+      const response=await fetch('http://localhost:8081/customer/get-customer?id=' + data.custId)
+      if(!response.ok){
+        throw new Error('Failed to verify customer')
+      }
+      const r_data=await response.text()
+      if(r_data.length === 0){
+        alert('Customer does not exist on LYP, making order with null custid')
+        data.custId=0
+      }
+    }catch(error){
+      console.error("Error verifying customer")
+    }
+
+    const ord_data={
+      'custId':data.custId,
+      'bill':0.0,
+      'tax':0.0
+    }
+    console.log(ord_data)
+
+    try{
+      const response=await fetch('http://localhost:8082/reception/add-order',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify(ord_data)
+      })
+      if(!response.ok){
+        throw new Error('Failed to create order')
+      }
+      const r_data=await response.text()
+      setOrd(JSON.parse(r_data))
+    }catch(error){
+      console.error("Error creating order")
+    }
+
+    const table_data={...tabl,orderNo:ord?.id}
+
+    try{
+      const response=await fetch('http://localhost:8082/reception/update-table',{
+        method:'PUT',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify(table_data)
+      })
+      if(!response.ok){
+        throw new Error('Failed to update table')
+      }
+      const r_data=await response.text()
+    }catch(error){
+      console.error("Error updating table")
     }
   } 
 

@@ -17,7 +17,6 @@ public class OrderRecord {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private int custId;
-    private int tableNo;
     private double bill;
     private double tax;
 }
