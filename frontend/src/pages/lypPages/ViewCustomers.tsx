@@ -1,5 +1,6 @@
-import { IonGrid, IonRow, IonCol, IonCardContent, IonCard } from "@ionic/react"
+import { IonGrid, IonRow, IonCol, IonCardContent, IonCard, IonButton } from "@ionic/react"
 import React, { useEffect, useState } from "react"
+import { useHistory } from "react-router"
 
 interface CustomerDetail{
     id:number,
@@ -9,6 +10,7 @@ interface CustomerDetail{
 
 const ViewCustomers:React.FC = () => {
     const [customers,setCustomers]=useState<CustomerDetail []>([])
+    const history=useHistory();
 
     useEffect(() => {
         fetchData();
@@ -29,6 +31,10 @@ const ViewCustomers:React.FC = () => {
         }
     }
 
+    const loadDetails = (id) => {
+        history.push('/customerLYP/customer-detail/' + id)
+    }
+
     if(!customers){
         return (
         <>
@@ -46,6 +52,9 @@ const ViewCustomers:React.FC = () => {
                             <p>ID: {cust.id}</p>
                             <p>Name:{cust.name}</p>
                             <p>Loyalty Points:{cust.loyalpoints}</p>
+                            <div className="ion-text-end">
+                                <IonButton onClick={() => loadDetails(cust.id)}>View Details</IonButton>
+                            </div>
                         </IonCardContent>
                     </IonCard>
                 ))

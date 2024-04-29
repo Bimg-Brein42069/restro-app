@@ -50,6 +50,9 @@ import CustomerWindow from './pages/customerPages/CustomerWindow';
 import ViewCustomers from './pages/lypPages/ViewCustomers';
 import AddCustomer from './pages/waiterPages/AddCustomer';
 import UpdateCustomer from './pages/waiterPages/UpdateCustomer';
+import WaiterInit from './pages/waiterPages/WaiterInit';
+import GenerateBill from './pages/waiterPages/GenerateBill';
+import GetCustomerDetail from './pages/lypPages/GetCustomerDetail';
 setupIonicReact();
 
 const App: React.FC = () => (
@@ -72,11 +75,20 @@ const App: React.FC = () => (
           <Route exact path="/customerLYP/view-customers">
             <ViewCustomers />
           </Route>
+          <Route exact path="/customerLYP/customer-detail/:custId">
+            <GetCustomerDetail />
+          </Route>
+          <Route exact path="/waiter">
+            <WaiterInit />
+          </Route>
           <Route exact path="/waiter/add-customer">
             <AddCustomer />
           </Route>
           <Route exact path="/waiter/update-customer">
             <UpdateCustomer />
+          </Route>
+          <Route exact path="/waiter/generate-bill">
+            <GenerateBill />
           </Route>
         </IonRouterOutlet>
     </IonReactRouter>

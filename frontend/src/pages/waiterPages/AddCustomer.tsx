@@ -5,16 +5,34 @@ import { IonGrid, IonRow, IonCol, IonButton } from "@ionic/react";
 
 type FormInputs = {
     name:string
-    loyaltypoints:number
+    loyalpoints:number
 }
 
 const AddCustomer:React.FC = () => {
     
     const {control,handleSubmit,reset} = useForm()
 
-    const onSubm = (data:any) => {
-        data = {...data, loyaltypoints:0}
-        console.log(data)
+    const onSubm = async (data:any) => {
+        data = {...data,loyalpoints:0}
+        try {
+            const response=await fetch(
+                'http://localhost:8081/customer/add-customer',{
+                    method:'POST',
+                    headers:{
+                        'Content-Type':'application/json',
+                    },
+                    body:JSON.stringify(data)
+                }
+            )
+            const response_data=await response.json();
+            if(!response.ok){
+                throw new Error('Error sending data')
+            }
+            reset()
+            alert('Customer Added Successfully')
+        }catch(error){
+            console.error("Error sending data:", error);
+        }
     }
 
     return (

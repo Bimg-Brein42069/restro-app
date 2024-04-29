@@ -1,8 +1,5 @@
 To integrate frontend with the backend, priority:
 
-Add customer to LoyaLty Program(LYP)
-Update customer of LYP.
-
 Implement table booking and order creation.
 
 Implement protection of customer ui such that only customers with a booked table can order(for not null tableid, orderid must not be null)
