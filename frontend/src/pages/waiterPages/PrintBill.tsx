@@ -202,25 +202,32 @@ const PrintBill:React.FC = () => {
     }
 
     const freeTable = async () => {
+        const tab_data = {id:tabl?.id}
         try{
-            const response=await fetch('http://localhost:8081/unbook-table' , {
+            const response=await fetch('http://localhost:8082/reception/unbook-table' , {
                 method:'PUT',
                 headers:{
                     'Content-Type':'application/json'
                 },
-                body:JSON.stringify(tabl?.id)
+                body:JSON.stringify(tab_data)
             })
             if(!response.ok){
-                throw new Error("Failed to fetch order")
+                throw new Error("Failed to unbook table")
             }
             const data = await response.json()
+            setFreed(true)
         }catch(error){
-            console.log("Error fetching order")
+            console.log("Error unbooking table")
         }
     }
 
     const onSubm = () => {
         billOrder();
+        if(!cust || !cust.loyalpoints){
+            
+            return ;
+        }
+        setLyp(cust.loyalpoints)
     }
 
     const onSubm2 = () => {
@@ -253,7 +260,22 @@ const PrintBill:React.FC = () => {
         if(!order)
             return (<>cannot reach this</>)
         const neworder={...order,bill:nt,tax:tx}
-        setOrderfinal(neworder)
+        try{
+            const response=await fetch('http://localhost:8082/reception/update-order' , {
+                method:'PUT',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify(neworder)
+            })
+            if(!response.ok){
+                throw new Error('Failed to create bill')
+            }
+            const r_data=response.json()
+            setOrderfinal(neworder);
+        }catch(error){
+            console.error('Error creating bill')
+        }
     }
 
     const billOrder2 = async() => {
@@ -271,30 +293,71 @@ const PrintBill:React.FC = () => {
         function calctax(total,num){
             return total + num.tax*num.quantity;
         }
+
+        if(!cust || !cust.loyalpoints)
+            return;
         
         const it=orditems.reduce(calcbill,0)
         const tx=orditems.reduce(calctax,0)
-        const nt=it+tx;
+        const nt=it+tx-cust.loyalpoints
         if(!order)
             return (<>cannot reach this</>)
         const neworder={...order,bill:nt,tax:tx}
-        setOrderfinal(neworder)
+        try{
+            const response=await fetch('http://localhost:8082/reception/update-order' , {
+                method:'PUT',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify(neworder)
+            })
+            if(!response.ok){
+                throw new Error('Failed to create bill with lyp')
+            }
+            const r_data=response.json()
+            setOrderfinal(neworder);
+        }catch(error){
+            console.error('Error creating bill with lyp')
+        }
     }
 
-    const addlyp = () => {
+    const addlyp = async () => {
         const currpts=cust?.loyalpoints;
         const bill=order?.bill
-        if(!currpts || !bill)
+        if(currpts === undefined || !bill){
+            setCustfinal({id:0,name:"test",loyalpoints:0})
             return ;
+        }
         const ans=lyp+currpts+bill/20;
         setLypFinal(ans);
     }
 
     const updatelyp = async() => {
-        
+        if(!cust)
+            return ;
+        const newcust={...cust,loyalpoints:lypfinal};
+        try{
+            const response=await fetch('http://localhost:8081/customer/update-customer' , {
+                method:'PUT',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify(newcust)
+            })
+            if(!response.ok){
+                throw new Error('Failed to add points')
+            }
+            const r_data=response.json()
+            setCustfinal(newcust);
+        }catch(error){
+            console.error('Error adding points')
+        }
     }
 
-    const goBack = () => {}
+    const goBack = () => {
+        console.log("Testing goback")
+        history.go(-2)
+    }
 
     function ShowBill(){
         const orditems = oims.map(oim => {
@@ -366,7 +429,7 @@ const PrintBill:React.FC = () => {
                     cust && cust.loyalpoints >0 &&
                     <IonCard>
                         <IonCardContent>
-                            <p>Loyalty Points:{cust.loyalpoints}</p>
+                            <p>Loyalty Points:<span style={{position:'absolute',right:15}}><strong>{cust.loyalpoints}</strong></span></p>
                         </IonCardContent>
                     </IonCard>
                 }
@@ -375,7 +438,8 @@ const PrintBill:React.FC = () => {
                 }
                 <div className="ion-text-center">
                     <IonButton onClick={onSubm}>Pay bill</IonButton>
-                    <IonButton onClick={onSubm2}>Pay bill with lyp</IonButton>
+                    {cust && cust.loyalpoints >0 &&
+                    <IonButton onClick={onSubm2}>Pay bill with lyp</IonButton>}
                 </div>
             </div>
         )

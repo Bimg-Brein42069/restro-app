@@ -62,6 +62,9 @@ const App: React.FC = () => (
   <SideBar />
     <IonReactRouter>
         <IonRouterOutlet id='main-content'>
+          <Route exact path="/">
+            <Redirect to="/reception/table-booking" />
+          </Route>
           <Route exact path="/customerUI/:tableNo">
             <CustomerInitialize />
           </Route>

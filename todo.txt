@@ -1,10 +1,20 @@
 To integrate frontend with the backend, priority:
 
 Add billing page:
-	Generate the bill(Save as .pdf and update details - bill generation complete)
+	Generate the bill(Save as .pdf)
 
 Implement filter in customer order items screen.
 
 Implement protection in table-booking method such that booking size cannot exceed max table size, else ask them to split.
 
 Begin Authorization implementation after all other to-do tasks completed.
+
+After authorization - edge cases{
+	refresh causes waitlist to be emptied: do one of two things ->
+
+	1) Store waitlist in localstorage(fails if machine shuts down in between)
+
+	2) Store waitlist as table in backend(must implement cronjob that clears that at every opening)
+}
+
+After handling edge cases, begin improvements on the css such that it looks good.

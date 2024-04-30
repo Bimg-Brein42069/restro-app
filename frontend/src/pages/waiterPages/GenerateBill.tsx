@@ -23,7 +23,7 @@ const GenerateBill:React.FC = () => {
     useEffect(() => {
         if(!order)
             return ;
-        history.push('print-bill/' + order.orderNo + '/' + order.tableNo)
+        history.push('/waiter/print-bill/' + order.orderNo + '/' + order.tableNo)
     },[order])
 
     const fetchTable = async (tableNo) => {

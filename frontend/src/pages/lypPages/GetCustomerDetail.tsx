@@ -201,7 +201,6 @@ const GetCustomerDetail:React.FC = () => {
                     <IonCard key={order.id}>
                         <IonCardContent>
                             <p>ID: {order.id}</p>
-                            <p>Table:{order.tableNo}</p>
                             <p>Tax:{order.tax}</p>
                             <p>Bill:{order.bill + order.tax}</p>
                             <IonButtons>
