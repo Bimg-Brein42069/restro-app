@@ -56,6 +56,11 @@ public class TableServiceImpl implements TableService{
     }
 
     @Override
+    public Optional<TableStat> findTableByTableNo(int tableNo) {
+        return TableRepo.findTableByTableNo(tableNo);
+    }
+
+    @Override
     public List<TableStat> getAllTables() {
         return TableRepo.findAll();
     }

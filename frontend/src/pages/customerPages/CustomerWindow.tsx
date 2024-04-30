@@ -5,7 +5,7 @@ import SideBar from '../../components/sidebars/SideBar';
 import TopBar from '../../components/topbars/TopBar';
 import React from 'react';
 import TopBarOrder from '../../components/topbars/TopBarOrder';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 interface ItemDetails{
   id:number,
@@ -19,6 +19,7 @@ interface ItemDetails{
 const CustomerWindow: React.FC = () => {
   const [items,setItems] = useState<any []>([]);
   const history = useHistory();
+  const tNo = useParams<{tableNo:string}>()
 
 
   useEffect(() => {
@@ -57,7 +58,8 @@ const CustomerWindow: React.FC = () => {
 
   const confirmPage = () => {
     localStorage.setItem('items', JSON.stringify(items));
-    history.push("order-window")
+    history.push("/customerui/order-window/" + tNo.tableNo)
+    location.reload()
   }
 
   function CustomerWindow2(){
@@ -93,6 +95,12 @@ const CustomerWindow: React.FC = () => {
       </div>
     );
   };
+
+  if(!tNo){
+    return (
+      <></>
+    )
+  }
 
   return (
     <>

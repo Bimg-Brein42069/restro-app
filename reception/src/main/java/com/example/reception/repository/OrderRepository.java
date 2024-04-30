@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<OrderRecord,Integer> {
     List<OrderRecord> findByCustId(Integer custId);
+    List<OrderRecord> findByBillGreaterThan(Integer billamt);
 }

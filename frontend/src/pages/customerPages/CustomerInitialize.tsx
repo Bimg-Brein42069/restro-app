@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import CustomerWindow from "./CustomerWindow";
 import './CustomerWindow.css';
 import { IonButton } from "@ionic/react";
-import { useHistory } from "react-router";
+import { useHistory, useParams } from "react-router";
 import TopBarInit from "../../components/topbars/TopBarInit";
 
 interface ItemDetails{
@@ -13,14 +13,33 @@ interface ItemDetails{
     price:number,
     tax:number
   }
+
+interface TableDetail{
+    id:number
+    orderId:number,
+}
   
   const CustomerInitialize: React.FC = () => {
     const [items, setItems] = useState<ItemDetails []>([])
-    
+    const tNo=useParams<{tableNo:string}>()
+    const [orderNo,setOrderNo] = useState();
     const history=useHistory();
 
+    useEffect(() => {
+        if(items.length === 0){
+            console.log('A')
+            return ;
+        }
+        localStorage.setItem('items',JSON.stringify(items))
+    },[items])
 
     useEffect(() => {
+        fetchTable();
+    },[tNo])
+
+    useEffect(() => {
+        if(!orderNo)
+            return ;
         const itemlist=localStorage.getItem('items')
         if(itemlist){
             const items=JSON.parse(itemlist);
@@ -29,7 +48,25 @@ interface ItemDetails{
         else{
             fetchItems();
         }
-    },[])
+    },[orderNo])
+
+    const fetchTable= async() => {
+        try{
+            const response = await fetch(
+                "http://localhost:8082/reception/find-table?tableNo=" + tNo.tableNo
+            )
+            if(!response.ok){
+                throw new Error('Failed to find table')
+            }
+            const data=await response.json();
+            console.log(data)
+            setOrderNo(data.orderNo)
+        }catch(error){
+            console.error('Error finding table')
+        }
+    }
+
+    
 
     const fetchItems = async() => {
         try {
@@ -50,9 +87,11 @@ interface ItemDetails{
     }
 
     const startOrder = () => {
-        localStorage.setItem('items',JSON.stringify(items))
+        
+        localStorage.setItem('order-id',JSON.stringify(orderNo))
         localStorage.removeItem('succ')
-        history.push("/customerUI/customer-window")
+        history.push("/customerUI/customer-window/" + tNo.tableNo)
+        location.reload()
     }
     
     function Sendmsg(){
@@ -75,6 +114,16 @@ interface ItemDetails{
                     <strong>{msg.message}</strong>
                     <p><IonButton onClick={startOrder}>Order More</IonButton></p>
                 </div>
+            </div>
+        )
+    }
+
+
+    if(!orderNo){
+        return (
+            <div className='container'>
+                <TopBarInit />
+                <strong>Please book table at reception and then order.</strong>
             </div>
         )
     }

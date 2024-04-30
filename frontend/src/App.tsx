@@ -53,6 +53,7 @@ import UpdateCustomer from './pages/waiterPages/UpdateCustomer';
 import WaiterInit from './pages/waiterPages/WaiterInit';
 import GenerateBill from './pages/waiterPages/GenerateBill';
 import GetCustomerDetail from './pages/lypPages/GetCustomerDetail';
+import GetAllOrders from './pages/bookingPages/GetAllOrders';
 setupIonicReact();
 
 const App: React.FC = () => (
@@ -60,17 +61,20 @@ const App: React.FC = () => (
   <SideBar />
     <IonReactRouter>
         <IonRouterOutlet id='main-content'>
-          <Route exact path="/customerUI/">
+          <Route exact path="/customerUI/:tableNo">
             <CustomerInitialize />
           </Route>
-          <Route exact path="/customerUI/customer-window">
+          <Route exact path="/customerUI/customer-window/:tableNo">
             <CustomerWindow />
           </Route>
-          <Route exact path="/customerUI/order-window">
+          <Route exact path="/customerUI/order-window/:tableNo">
             <OrderWindow />
           </Route>
           <Route exact path="/reception/table-booking">
             <TableListings />
+          </Route>
+          <Route exact path="/reception/all-orders">
+            <GetAllOrders />
           </Route>
           <Route exact path="/customerLYP/view-customers">
             <ViewCustomers />

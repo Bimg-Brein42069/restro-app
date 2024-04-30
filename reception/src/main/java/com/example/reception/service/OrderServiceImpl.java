@@ -20,7 +20,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderRecord> getAllOrders(){
-        return OrderRepo.findAll();
+        return OrderRepo.findByBillGreaterThan(0);
     }
 
     @Override

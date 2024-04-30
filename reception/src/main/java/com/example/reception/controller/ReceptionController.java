@@ -152,4 +152,10 @@ public class ReceptionController {
 
     @PutMapping("/update-table")
     TableStat updateTable(@RequestBody TableStat tbs){ return TableServ.updateTable(tbs);}
+
+    @GetMapping("/find-table")
+    TableStat findTableByTableNo(@RequestParam Integer tableNo){
+        Optional<TableStat> tbs=TableServ.findTableByTableNo(tableNo);
+        return tbs.orElse(null);
+    }
 }

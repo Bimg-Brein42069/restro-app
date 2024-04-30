@@ -9,9 +9,6 @@ Add billing page:
 	Create bill for the order.
 	Generate the bill(Save as .pdf)
 
-Implement viewing details of all orders(Import from 1st code, and fetch from orderId) and orders by customer id(2nd one done).
-Can filter out 0 Rs. bill orders (Not complete)
-
 Implement filter in customer order items screen.
 
 Begin Authorization implementation after all other to-do tasks completed.

@@ -68,11 +68,41 @@ const OrderWindow: React.FC = () => {
   }
 
 
+  const addItemToOrder = async (itempart) => {
+    try{
+      const response=await fetch('http://localhost:8082/reception/add-item-to-order',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body:JSON.stringify(itempart)
+      })
+      if(!response.ok){
+        throw new Error("Failed to add items")
+      }
+    }catch(error){
+      console.error("Error adding items")
+    }
+  }
+
+
+  const handleOrder = async () => {
+    const orderlist = localStorage.getItem('order-id')
+    if(!orderlist)
+      return ;
+    const orderId=JSON.parse(orderlist);
+    
+    for(var i=0;i<orditems.length;i++){
+      console.log({...orditems[i],orderId:orderId})
+      addItemToOrder({itemId:orditems[i].id,itemQty:orditems[i].quantity,orderId:orderId})
+    }
+  }
+
   const placeOrder = () => {
-    console.log('Order Successful')
+    handleOrder()
     localStorage.removeItem('items');
     localStorage.setItem('succ',JSON.stringify({message:"Order successfully placed!! \nGet more while waiting for your food."}))
-    history.push("/customerUI")
+    history.go(-2)
   }
 
   function calcbill(total,num){
@@ -128,7 +158,7 @@ const OrderWindow: React.FC = () => {
   function OrderWindow2(){
     return (
       <div className="container">
-        <TopBarOrder />
+        <TopBarOrder/>
         {
           orditems.length>0 ?
           orditems.map(item => (
