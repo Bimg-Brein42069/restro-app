@@ -54,6 +54,7 @@ import WaiterInit from './pages/waiterPages/WaiterInit';
 import GenerateBill from './pages/waiterPages/GenerateBill';
 import GetCustomerDetail from './pages/lypPages/GetCustomerDetail';
 import GetAllOrders from './pages/bookingPages/GetAllOrders';
+import PrintBill from './pages/waiterPages/PrintBill';
 setupIonicReact();
 
 const App: React.FC = () => (
@@ -93,6 +94,9 @@ const App: React.FC = () => (
           </Route>
           <Route exact path="/waiter/generate-bill">
             <GenerateBill />
+          </Route>
+          <Route exact path="/waiter/print-bill/:orderId/:tableNo">
+            <PrintBill />
           </Route>
         </IonRouterOutlet>
     </IonReactRouter>
