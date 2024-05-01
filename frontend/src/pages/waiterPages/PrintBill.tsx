@@ -46,7 +46,7 @@ interface BillDetails {
         priceperunit:number,
         quantity:number,
         netprice:number
-    },
+    }[],
     item_total:number,
     tax:number,
     lyp:number,
@@ -76,7 +76,7 @@ const PrintBill:React.FC = () => {
     },[oId])
 
     useEffect(() => {
-        if(!order)
+        if(!order || order.bill > 0)
             return ;
         setOrderf(!orderf)
     },[order])
@@ -440,7 +440,7 @@ const PrintBill:React.FC = () => {
         })
         
         //instead of console.log, we can stream this to the bill printing machine configured to read the json.
-        console.log({orderId:oId.orderId,items:testoims,item_total:it,tax:tx,lyp:cust.loyalpoints,total_bill:nt})
+        console.log({orderId:oId.orderId,items:testoims,item_total:it,tax:tx,lyp:-cust.loyalpoints,total_bill:nt})
     }
 
     const goBack = () => {
@@ -484,6 +484,15 @@ const PrintBill:React.FC = () => {
         )
     }
 
+    if(!order)
+        return (<></>)
+
+    if(order.bill > 0){
+        return (<>
+            Order has been billed already.
+        </>)
+    }
+
     function CalcBill(){
         return (
             <div className="container">
@@ -515,7 +524,7 @@ const PrintBill:React.FC = () => {
                     </IonCard>
                 }
                 {
-                    cust && cust.loyalpoints >0 &&
+                    cust && cust.loyalpoints>0 &&
                     <IonCard>
                         <IonCardContent>
                             <p>Loyalty Points:<span style={{position:'absolute',right:15}}><strong>{cust.loyalpoints}</strong></span></p>
@@ -527,7 +536,7 @@ const PrintBill:React.FC = () => {
                 }
                 <div className="ion-text-center">
                     <IonButton onClick={onSubm}>Generate bill</IonButton>
-                    {cust && cust.loyalpoints >0 &&
+                    {cust && cust.loyalpoints>0 &&
                     <IonButton onClick={onSubm2}>Generate bill with lyp</IonButton>}
                 </div>
             </div>

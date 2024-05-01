@@ -1,8 +1,6 @@
 To integrate frontend with the backend, priority:
 
-Implement filter in customer order items screen.
-
-Begin Authorization implementation after all other to-do tasks completed.
+Begin Authorization implementation.
 
 Authorization {
 	Add admin user.
@@ -15,7 +13,7 @@ Authorization {
 }
 
 After authorization - edge cases{
-	
+	Implement filter in customer order items screen.
 	refresh causes waitlist to be emptied: do one of two things ->
 
 	1) Store waitlist in localstorage(fails if machine shuts down in between)
