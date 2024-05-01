@@ -15,12 +15,7 @@ Authorization {
 }
 
 After authorization - edge cases{
-
-	Add billing page:
-		Generate the bill(Save as .pdf)
 	
-	no pdf library exists for reading an ionic component render into react for 
-
 	refresh causes waitlist to be emptied: do one of two things ->
 
 	1) Store waitlist in localstorage(fails if machine shuts down in between)
@@ -29,3 +24,5 @@ After authorization - edge cases{
 }
 
 After handling edge cases, begin improvements on the css such that it looks good.
+
+Note: bill generation has been handled keeping the restaurant hardware in mind. The json generated from the bill will be sent to the bill priting machine/service which will then process the json and print out the bill.

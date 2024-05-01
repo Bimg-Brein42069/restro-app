@@ -39,10 +39,18 @@ interface TableDetails {
     seats:number
 }
 
-interface ItemRedDetails{
-    price:number,
-    quantity:number,
-    tax:number
+interface BillDetails {
+    orderId:number,
+    items:{
+        name:string,
+        priceperunit:number,
+        quantity:number,
+        netprice:number
+    },
+    item_total:number,
+    tax:number,
+    lyp:number,
+    bill:number
 }
 
 const PrintBill:React.FC = () => {
@@ -222,6 +230,7 @@ const PrintBill:React.FC = () => {
     }
 
     const onSubm = () => {
+        SaveBill();
         billOrder();
         if(!cust || !cust.loyalpoints){
             
@@ -231,6 +240,7 @@ const PrintBill:React.FC = () => {
     }
 
     const onSubm2 = () => {
+        SaveBill2();
         billOrder2();
         if(!cust || !cust.loyalpoints)
             return ;
@@ -354,10 +364,10 @@ const PrintBill:React.FC = () => {
         }
     }
 
-    function SaveBill(){
+    const SaveBill = () => {
 
         /*
-            Plan : Use react-to-pdf after rendering this table in a different page.
+            New Plan: save all of the bill generated in a json object. Then this json can be sent to the bill printing machine configured with json.
         */ 
 
         const orditems = oims.map(oim => {
@@ -381,40 +391,56 @@ const PrintBill:React.FC = () => {
         const tx=orditems.reduce(calctax,0)
         const nt=it+tx;
 
-        if(Number.isNaN(it) || Number.isNaN(tx))
-            return (<></>)
+        const testoims=oims.map((oim) => {
+            const itemdets=items.find(item => item.id === oim.itemId)
+            if(!itemdets)
+                return {}
+            return {name:itemdets.name,priceperunit:itemdets.price,quantity:oim.itemQty,netprice:itemdets.price * oim.itemQty}
+        })
+        
+        //instead of console.log, we can stream this to the bill printing machine configured to read the json.
+        console.log({orderId:oId.orderId,items:testoims,item_total:it,tax:tx,lyp:0,total_bill:nt})
+    }
 
-        return(
-            <IonGrid>
-                <IonRow><IonCol><strong>Order ID:{oId.orderId}</strong></IonCol></IonRow>
-                <IonRow class="table-header">
-                    <IonCol>Item Name</IonCol>
-                    <IonCol class='ion-text-end'>Price Per Unit</IonCol>
-                    <IonCol class='ion-text-end'>Item Quantity</IonCol>
-                    <IonCol class='ion-text-end'>Net Price</IonCol>
-                </IonRow>
-                {
-                oims.map((oim) => {
-                        const itemdets=items.find(item => item.id === oim.itemId)
-                        if(!itemdets)
-                            return (<div key={oim.id}></div>)
-                        return (
-                            <IonRow key={oim.id}>
-                                <IonCol><p>{itemdets.name}</p></IonCol>
-                                <IonCol class='ion-text-end'><p>{itemdets.price}</p></IonCol>
-                                <IonCol class='ion-text-end'><p>{oim.itemQty}</p></IonCol>
-                                <IonCol class='ion-text-end'><p>{itemdets.price * oim.itemQty}</p></IonCol>
-                            </IonRow>
-                        )
-                    })
-                }
-                <p><br></br></p>
-                <IonRow><IonCol><p>Item Total:<span style={{position:'absolute',right:15}}>{it}</span></p></IonCol></IonRow>
-                <IonRow><IonCol><p>Taxes:<span style={{position:'absolute',right:15}}>{tx}</span></p></IonCol></IonRow>
-                <IonRow><IonCol><strong>Item Total:<span style={{position:'absolute',right:15}}>{it}</span></strong></IonCol></IonRow>
-            </IonGrid>
-        )
+    const SaveBill2 = () => {
 
+        /*
+            New Plan: save all of the bill generated in a json object. Then this json can be sent to the bill printing machine configured with json.
+        */ 
+
+        const orditems = oims.map(oim => {
+            const itemdets=items.find(item => item.id === oim.itemId)
+            if(!itemdets){
+                return {}
+            }
+            return {price:itemdets.price,tax:itemdets.tax,quantity:oim.itemQty}
+        })
+
+
+        function calcbill(total,num){
+            return total + num.price*num.quantity;
+        }
+        
+        function calctax(total,num){
+            return total + num.tax*num.quantity;
+        }
+
+        if(!cust || !cust.loyalpoints)
+            return ;
+        
+        const it=orditems.reduce(calcbill,0)
+        const tx=orditems.reduce(calctax,0)
+        const nt=it+tx-cust.loyalpoints;
+
+        const testoims=oims.map((oim) => {
+            const itemdets=items.find(item => item.id === oim.itemId)
+            if(!itemdets)
+                return {}
+            return {name:itemdets.name,priceperunit:itemdets.price,quantity:oim.itemQty,netprice:itemdets.price * oim.itemQty}
+        })
+        
+        //instead of console.log, we can stream this to the bill printing machine configured to read the json.
+        console.log({orderId:oId.orderId,items:testoims,item_total:it,tax:tx,lyp:cust.loyalpoints,total_bill:nt})
     }
 
     const goBack = () => {
@@ -500,9 +526,9 @@ const PrintBill:React.FC = () => {
                     <ShowBill />
                 }
                 <div className="ion-text-center">
-                    <IonButton onClick={onSubm}>Pay bill</IonButton>
+                    <IonButton onClick={onSubm}>Generate bill</IonButton>
                     {cust && cust.loyalpoints >0 &&
-                    <IonButton onClick={onSubm2}>Pay bill with lyp</IonButton>}
+                    <IonButton onClick={onSubm2}>Generate bill with lyp</IonButton>}
                 </div>
             </div>
         )
