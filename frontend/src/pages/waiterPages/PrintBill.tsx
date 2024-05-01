@@ -1,4 +1,4 @@
-import { IonButton, IonCard, IonCardContent, IonCheckbox } from "@ionic/react"
+import { IonButton, IonCard, IonCardContent, IonCheckbox, IonCol, IonContent, IonGrid, IonRow } from "@ionic/react"
 import React, { useEffect, useState } from "react"
 import { useHistory, useParams } from "react-router"
 
@@ -354,9 +354,72 @@ const PrintBill:React.FC = () => {
         }
     }
 
+    function SaveBill(){
+
+        /*
+            Plan : Use react-to-pdf after rendering this table in a different page.
+        */ 
+
+        const orditems = oims.map(oim => {
+            const itemdets=items.find(item => item.id === oim.itemId)
+            if(!itemdets){
+                return {}
+            }
+            return {price:itemdets.price,tax:itemdets.tax,quantity:oim.itemQty}
+        })
+
+
+        function calcbill(total,num){
+            return total + num.price*num.quantity;
+        }
+        
+        function calctax(total,num){
+            return total + num.tax*num.quantity;
+        }
+        
+        const it=orditems.reduce(calcbill,0)
+        const tx=orditems.reduce(calctax,0)
+        const nt=it+tx;
+
+        if(Number.isNaN(it) || Number.isNaN(tx))
+            return (<></>)
+
+        return(
+            <IonGrid>
+                <IonRow><IonCol><strong>Order ID:{oId.orderId}</strong></IonCol></IonRow>
+                <IonRow class="table-header">
+                    <IonCol>Item Name</IonCol>
+                    <IonCol class='ion-text-end'>Price Per Unit</IonCol>
+                    <IonCol class='ion-text-end'>Item Quantity</IonCol>
+                    <IonCol class='ion-text-end'>Net Price</IonCol>
+                </IonRow>
+                {
+                oims.map((oim) => {
+                        const itemdets=items.find(item => item.id === oim.itemId)
+                        if(!itemdets)
+                            return (<div key={oim.id}></div>)
+                        return (
+                            <IonRow key={oim.id}>
+                                <IonCol><p>{itemdets.name}</p></IonCol>
+                                <IonCol class='ion-text-end'><p>{itemdets.price}</p></IonCol>
+                                <IonCol class='ion-text-end'><p>{oim.itemQty}</p></IonCol>
+                                <IonCol class='ion-text-end'><p>{itemdets.price * oim.itemQty}</p></IonCol>
+                            </IonRow>
+                        )
+                    })
+                }
+                <p><br></br></p>
+                <IonRow><IonCol><p>Item Total:<span style={{position:'absolute',right:15}}>{it}</span></p></IonCol></IonRow>
+                <IonRow><IonCol><p>Taxes:<span style={{position:'absolute',right:15}}>{tx}</span></p></IonCol></IonRow>
+                <IonRow><IonCol><strong>Item Total:<span style={{position:'absolute',right:15}}>{it}</span></strong></IonCol></IonRow>
+            </IonGrid>
+        )
+
+    }
+
     const goBack = () => {
-        console.log("Testing goback")
-        history.go(-2)
+        
+        history.replace("/waiter/generate-bill")
     }
 
     function ShowBill(){

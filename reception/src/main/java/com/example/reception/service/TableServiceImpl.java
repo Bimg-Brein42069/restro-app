@@ -66,6 +66,11 @@ public class TableServiceImpl implements TableService{
     }
 
     @Override
+    public Integer getMaxSeats() {
+        return TableRepo.getMaxSeats();
+    }
+
+    @Override
     public TableStat updateTable(TableStat tbs) {
         Optional<TableStat> etbs=TableRepo.findById(tbs.getId());
         if(etbs.isEmpty())

@@ -41,9 +41,22 @@ interface OrderDetail{
 const TableListings: React.FC = () => {
   const [waitlist,setWaitlist] = useState<WaitlistDetail []>([]);
   const {control,handleSubmit,reset} = useForm({mode:'onSubmit'});
-  const [mkord,setMkord] = useState(false)
+  const [maxseats,setMaxseats] = useState(0);
   const [ord,setOrd] = useState<OrderDetail>();
   const [tabl,setTabl] = useState<TableDetail>();
+
+  const getMaxSeats = async() => {
+    try{
+      const response=await fetch('http://localhost:8082/reception/max-seats')
+      if(!response.ok){
+        throw new Error('Failed to verify customer')
+      }
+      const r_data=await response.json();
+      setMaxseats(r_data)
+    }catch(error){
+      console.error("Error verifying customer")
+    }
+  }
 
 
   const booktable = async (data:any) => {
@@ -59,9 +72,16 @@ const TableListings: React.FC = () => {
       }
       const r_data=await response.text()
       if(r_data.length === 0){
-        data = {...data, id:uuidv4(),times:Date.now()}
-        const wt=[...waitlist,data]
-        setWaitlist(wt)
+        if(data.seats <= maxseats){
+          data = {...data, id:uuidv4(),times:Date.now()}
+          const wt=[...waitlist,data]
+          setWaitlist(wt)
+        }
+        else{
+          alert('Too many seats selected: Please ask customers to split')
+          reset()
+          return ;
+        }
       }
       else{
         setTabl(tabl => JSON.parse(r_data))
@@ -136,6 +156,10 @@ const TableListings: React.FC = () => {
       console.error("Error updating table")
     }
   }
+
+  useEffect(() => {
+    getMaxSeats();
+  },[])
 
   useEffect(() => {
     if(!tabl || tabl===undefined)
@@ -226,6 +250,7 @@ const TableListings: React.FC = () => {
         throw new Error('Failed to update table')
       }
       const r_data=await response.text()
+      alert("Table no " + JSON.parse(r_data).tableNo + " has been booked succesfully")
     }catch(error){
       console.error("Error updating table")
     }
@@ -235,14 +260,18 @@ const TableListings: React.FC = () => {
 
     const [tablestats,setTablestats] = useState<TableDetail []>([])
 
-    const getAnswer = async () => {
+    const getTableData = async () => {
+      try{
       const res = await fetch("http://localhost:8082/reception/get-all-tables");
       const data = await res.json();
       setTablestats(data);
+      }catch(error){
+        console.error('Unable to fetch table data')
+      }
     };
 
     useEffect(() => {
-      const timer = setInterval(getAnswer, 10);
+      const timer = setInterval(getTableData, 10);
       return () => clearInterval(timer);
     }, []);
     
@@ -280,10 +309,10 @@ const TableListings: React.FC = () => {
         {
           tablestats.map((tbs) => {
             if(tbs.av === true){
-              return (<IonButton style={{width:'50px'}} disabled color='success'>{tbs.tableNo}</IonButton>)
+              return (<IonButton key={tbs.id} style={{width:'50px'}} disabled color='success'>{tbs.tableNo}</IonButton>)
             }
             else{
-              return (<IonButton style={{width:'50px'}} disabled color='danger'>{tbs.tableNo}</IonButton>)
+              return (<IonButton key={tbs.id} style={{width:'50px'}} disabled color='danger'>{tbs.tableNo}</IonButton>)
             }
           })
         }

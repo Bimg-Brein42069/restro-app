@@ -1,15 +1,26 @@
 To integrate frontend with the backend, priority:
 
-Add billing page:
-	Generate the bill(Save as .pdf)
-
 Implement filter in customer order items screen.
-
-Implement protection in table-booking method such that booking size cannot exceed max table size, else ask them to split.
 
 Begin Authorization implementation after all other to-do tasks completed.
 
+Authorization {
+	Add admin user.
+
+	Seed him using sign-up-admin function.
+	
+	Give him the power to add new items to the menu.
+
+	Give him the power to add new users(waiters, receptionists, and lyf-staff)
+}
+
 After authorization - edge cases{
+
+	Add billing page:
+		Generate the bill(Save as .pdf)
+	
+	no pdf library exists for reading an ionic component render into react for 
+
 	refresh causes waitlist to be emptied: do one of two things ->
 
 	1) Store waitlist in localstorage(fails if machine shuts down in between)

@@ -150,6 +150,11 @@ public class ReceptionController {
         return TableServ.getAllTables();
     }
 
+    @GetMapping("/max-seats")
+    Integer getMaxSeats(){
+        return TableServ.getMaxSeats();
+    }
+
     @PutMapping("/update-table")
     TableStat updateTable(@RequestBody TableStat tbs){ return TableServ.updateTable(tbs);}
 

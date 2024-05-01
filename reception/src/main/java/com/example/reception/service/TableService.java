@@ -13,5 +13,6 @@ public interface TableService {
     TableStat findTable(int seats);
     Optional<TableStat> findTableByTableNo(int tableNo);
     List<TableStat> getAllTables();
+    Integer getMaxSeats();
     TableStat updateTable(TableStat tbs);
 }
