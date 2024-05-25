@@ -3,8 +3,6 @@ To integrate frontend with the backend, priority:
 Begin Authorization implementation.
 
 Authorization {
-	Add admin user.
-
 	Seed him using sign-up-admin function.
 	
 	Give him the power to add new items to the menu.
