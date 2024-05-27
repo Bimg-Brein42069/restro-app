@@ -55,6 +55,7 @@ import GenerateBill from './pages/waiterPages/GenerateBill';
 import GetCustomerDetail from './pages/lypPages/GetCustomerDetail';
 import GetAllOrders from './pages/bookingPages/GetAllOrders';
 import PrintBill from './pages/waiterPages/PrintBill';
+import SignIn from './pages/SignIn';
 setupIonicReact();
 
 const App: React.FC = () => (
@@ -63,7 +64,7 @@ const App: React.FC = () => (
     <IonReactRouter>
         <IonRouterOutlet id='main-content'>
           <Route exact path="/">
-            <Redirect to="/reception/table-booking" />
+            <Redirect to="/sign-in" />
           </Route>
           <Route exact path="/customerUI/:tableNo">
             <CustomerInitialize />
@@ -100,6 +101,9 @@ const App: React.FC = () => (
           </Route>
           <Route exact path="/waiter/print-bill/:orderId/:tableNo">
             <PrintBill />
+          </Route>
+          <Route exact path="/sign-in">
+            <SignIn />
           </Route>
         </IonRouterOutlet>
     </IonReactRouter>
