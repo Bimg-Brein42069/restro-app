@@ -13,7 +13,6 @@ const SignIn : React.FC = () => {
     const dispath=useDispatch();
     const onsubmit = async (data:any) => {
         try{
-            console.log(data);
             const res = await fetch('http://localhost:8085/api/auth/login', {
                 method:'POST',
                 headers: {
