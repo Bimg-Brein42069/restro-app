@@ -22,7 +22,7 @@ const TextInput: FC<InputProps> = ({ name, placeHolder, label, control }) => {
             placeholder={placeHolder}
             label={label}
             labelPlacement='floating'
-            type={(label=='Password')?'password':'text'}
+            type={(label=='Password' || label=='New Password' || label=='Confirm Password')?'password':'text'}
           />
         )}
       />

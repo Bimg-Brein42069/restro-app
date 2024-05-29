@@ -56,11 +56,11 @@ import GetCustomerDetail from './pages/lypPages/GetCustomerDetail';
 import GetAllOrders from './pages/bookingPages/GetAllOrders';
 import PrintBill from './pages/waiterPages/PrintBill';
 import SignIn from './pages/SignIn';
+import AdminSignUp from './pages/adminPages/AdminSignUp';
 setupIonicReact();
 
 const App: React.FC = () => (
   <IonApp>
-  <SideBar />
     <IonReactRouter>
         <IonRouterOutlet id='main-content'>
           <Route exact path="/">
@@ -104,6 +104,9 @@ const App: React.FC = () => (
           </Route>
           <Route exact path="/sign-in">
             <SignIn />
+          </Route>
+          <Route exact path="/admin-sign-up">
+            <AdminSignUp />
           </Route>
         </IonRouterOutlet>
     </IonReactRouter>
