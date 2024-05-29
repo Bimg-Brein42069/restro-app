@@ -173,9 +173,9 @@ const GetCustomerDetail:React.FC = () => {
 
     if(!customer){
         return (
-        <>
-        Loading
-        </>
+        <div>
+            <p>Loading...</p>
+        </div>
         )
     }
     return (

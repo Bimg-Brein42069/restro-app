@@ -41,7 +41,6 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-import SideBar from './components/sidebars/SideBar';
 import React from 'react';
 import OrderWindow from './pages/customerPages/OrderWindow'
 import TableListings from './pages/bookingPages/TableListings';
@@ -57,14 +56,32 @@ import GetAllOrders from './pages/bookingPages/GetAllOrders';
 import PrintBill from './pages/waiterPages/PrintBill';
 import SignIn from './pages/SignIn';
 import AdminSignUp from './pages/adminPages/AdminSignUp';
+import AuthRoute from './components/AuthRoute';
+import { useSelector } from 'react-redux';
+import SideBarSel from './components/sidebars/SideBarSel';
+import TopBar from './components/topbars/TopBar';
+import AdminSideBar from './components/sidebars/AdminSideBar';
+import ReceptionSideBar from './components/sidebars/ReceptionSideBar';
+import WaiterSideBar from './components/sidebars/WaiterSideBar';
+import LYPSideBar from './components/sidebars/LYPSideBar';
 setupIonicReact();
 
-const App: React.FC = () => (
+const App = () => {
+  const user = useSelector((state:any) => state.user.currentUser)
+  return (
   <IonApp>
+    {(user && user.role=='ADMIN') && <AdminSideBar />}
+    {(user && user.role=='RECEPTIONIST') && <ReceptionSideBar />}
+    {(user && user.role=='WAITER') && <WaiterSideBar />}
+    {(user && user.role=='LYPREP') && <LYPSideBar />}
+    {(user) && <TopBar />}
     <IonReactRouter>
         <IonRouterOutlet id='main-content'>
           <Route exact path="/">
             <Redirect to="/sign-in" />
+          </Route>
+          <Route exact path="/sign-in">
+            <SignIn />
           </Route>
           <Route exact path="/customerUI/:tableNo">
             <CustomerInitialize />
@@ -75,42 +92,25 @@ const App: React.FC = () => (
           <Route exact path="/customerUI/order-window/:tableNo">
             <OrderWindow />
           </Route>
-          <Route exact path="/reception/table-booking">
-            <TableListings />
-          </Route>
-          <Route exact path="/reception/all-orders">
-            <GetAllOrders />
-          </Route>
-          <Route exact path="/customerLYP/view-customers">
-            <ViewCustomers />
-          </Route>
-          <Route exact path="/customerLYP/customer-detail/:custId">
-            <GetCustomerDetail />
-          </Route>
-          <Route exact path="/waiter">
-            <WaiterInit />
-          </Route>
-          <Route exact path="/waiter/add-customer">
-            <AddCustomer />
-          </Route>
-          <Route exact path="/waiter/update-customer">
-            <UpdateCustomer />
-          </Route>
-          <Route exact path="/waiter/generate-bill">
-            <GenerateBill />
-          </Route>
-          <Route exact path="/waiter/print-bill/:orderId/:tableNo">
-            <PrintBill />
-          </Route>
-          <Route exact path="/sign-in">
-            <SignIn />
-          </Route>
-          <Route exact path="/admin-sign-up">
-            <AdminSignUp />
-          </Route>
+
+          <AuthRoute roles={['RECEPTIONIST']} exact path="/reception/table-booking" component={TableListings} />
+          <AuthRoute roles={['RECEPTIONIST']} exact path="/reception/all-orders" component={GetAllOrders} />
+
+          <AuthRoute roles={['LYPREP']} exact path="/customerLYP/view-customers" component={ViewCustomers} />
+          <AuthRoute roles={['LYPREP']} exact path="/customerLYP/customer-detail/:custId" component={GetCustomerDetail} />
+
+          <AuthRoute roles={['WAITER']} exact path="/waiter" component={WaiterInit} />
+          <AuthRoute roles={['WAITER']} exact path="/waiter/add-customer" component={AddCustomer} />
+          <AuthRoute roles={['WAITER']} exact path="/waiter/update-customer" component={UpdateCustomer} />
+          <AuthRoute roles={['WAITER']} exact path="/waiter/generate-bill" component={GenerateBill} />
+          <AuthRoute roles={['WAITER']} exact path="/waiter/print-bill/:orderId/:tableNo" component={PrintBill} />
+
+          <AuthRoute roles={['ADMIN']} exact path="/admin/sign-up" component={AdminSignUp} />
+
         </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
-);
+  )
+};
 
 export default App;

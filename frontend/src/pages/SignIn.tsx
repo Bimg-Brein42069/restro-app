@@ -32,9 +32,24 @@ const SignIn : React.FC = () => {
             const user = jwtDecode(token) as {sub:string, role:string};
             setMsg(undefined);
             dispath(authLogin({jwt:token,user}))
-            console.log({jwt:token,user});
-            dispath(authLogout())
-            reset()
+            switch(user.role){
+                case 'RECEPTIONIST':
+                    history.push('/reception/table-booking')
+                    location.reload();
+                    break;
+                case 'LYPREP':
+                    history.push('/customerLYP/view-customers')
+                    location.reload();
+                    break;
+                case 'WAITER':
+                    history.push('/waiter')
+                    location.reload();
+                    break;
+                case 'ADMIN':
+                    history.push('/admin/sign-up')
+                    location.reload();
+                    break;
+            }
         }
         catch{
             console.error('Network Error')

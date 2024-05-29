@@ -8,7 +8,7 @@ interface authRouteProps {
 }
 
 const AuthRoute: React.FC<authRouteProps> = ({ roles, ...routeProps }) => {
-    const user = useSelector((state:any) => state.user.currUser);
+    const user = useSelector((state:any) => state.user.currentUser);
     if(user && user.role && roles.includes(user.role)){
         return <Route {...routeProps} />
     }

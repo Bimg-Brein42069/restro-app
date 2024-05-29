@@ -50,7 +50,6 @@ const GenerateBill:React.FC = () => {
 
     return (
         <div className="container">
-            <TopBarInit />
             <p><br></br></p>
             <form onSubmit={handleSubmit(onSubm)}>
                 <TextInput

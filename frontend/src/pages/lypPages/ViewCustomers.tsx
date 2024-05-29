@@ -37,9 +37,9 @@ const ViewCustomers:React.FC = () => {
 
     if(!customers){
         return (
-        <>
-        Loading
-        </>
+        <div>
+            <p>Loading...</p>
+        </div>
         )
     }
     return (

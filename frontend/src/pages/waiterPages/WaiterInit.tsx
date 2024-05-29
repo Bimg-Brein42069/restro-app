@@ -22,7 +22,6 @@ const WaiterInit:React.FC = () => {
 
     return (
         <div className="container">
-            <TopBar />
             <div className="ion-text-center">
                 <IonButton onClick={genbill}>Generate Bill</IonButton>
                 <IonButton onClick={addcust}>Add Customer</IonButton>

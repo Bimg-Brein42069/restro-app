@@ -1,7 +1,6 @@
 import { IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonContent, IonGrid, IonInput, IonItem, IonLabel, IonPage, IonRow, IonText, IonTitle } from '@ionic/react';
 import './TableListings.css';
 import { useEffect, useRef, useState } from 'react';
-import SideBar from '../../components/sidebars/SideBar';
 import TopBarInit from '../../components/topbars/TopBarInit';
 import React from 'react';
 import TopBarOrder from '../../components/topbars/TopBarOrder';
@@ -324,7 +323,6 @@ const TableListings: React.FC = () => {
   function TableListings2(){
     return (
       <div className="container">
-        <TopBarInit />
         <div className="row">
             <div className="column">
         <div className="ion-text-center">

@@ -2,22 +2,22 @@ import { IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonMenuT
 import './SideBar.css'
 import React from 'react';
 
-const SideBar: React.FC = () => {
+const LYPSideBar: React.FC = () => {
 
   return (
     <IonMenu contentId="main-content">
       
       <IonHeader>
         <IonToolbar>
-          <IonTitle className='font-bold'>Restaurant SideBar</IonTitle>
+          <IonTitle className='font-bold'>LYP Menu</IonTitle>
         </IonToolbar>
       </IonHeader>
 
       <IonContent className="ion-padding">
         <IonList>
           <IonMenuToggle>
-            <IonItem routerLink="/customerUi/customer-window" routerDirection="none">
-              <IonLabel>Customer Window</IonLabel>
+            <IonItem routerLink="/customerLYP/view-customers" routerDirection="none">
+              <IonLabel>View all members</IonLabel>
             </IonItem>
           </IonMenuToggle>
         </IonList>
@@ -26,4 +26,4 @@ const SideBar: React.FC = () => {
   );
 }
 
-export default SideBar;
+export default LYPSideBar;
