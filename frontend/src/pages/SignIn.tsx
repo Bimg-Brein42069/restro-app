@@ -58,13 +58,13 @@ const SignIn : React.FC = () => {
     }
     return (
         <IonPage>
-            <div className='p-3 max-w-4xl mx-auto'>
-                <h1>Sign-In</h1>
+            <div className='container'>
+                <h1><b><center>Sign-In</center></b></h1>
                 <IonText color='danger'>{msg}</IonText>
                 <form onSubmit={handleSubmit(onsubmit)}>
                     <TextInput name='email' placeHolder='Enter email' label='Email' control={control}/>
                     <TextInput name='password' placeHolder='Enter password' label='Password' control={control}/>
-                    <IonButton type='submit'>Sign In</IonButton>
+                    <center><IonButton type='submit'>Sign In</IonButton></center>
                 </form>
                 
             </div>

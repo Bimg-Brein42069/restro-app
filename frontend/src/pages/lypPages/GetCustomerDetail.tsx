@@ -180,6 +180,7 @@ const GetCustomerDetail:React.FC = () => {
     }
     return (
         <div className="container">
+            <p><h1>Member Details</h1></p>
             <IonGrid>
                 <IonCard key={customer.id}>
                     <IonCardContent>

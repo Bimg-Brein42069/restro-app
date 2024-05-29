@@ -1,6 +1,7 @@
 .container {
+  display: inline-block;
   text-align: left;
-  position: absolute;
+  margin-top: 50px;
   left: 0;
   right: 0;
 }

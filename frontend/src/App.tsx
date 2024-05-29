@@ -64,6 +64,8 @@ import AdminSideBar from './components/sidebars/AdminSideBar';
 import ReceptionSideBar from './components/sidebars/ReceptionSideBar';
 import WaiterSideBar from './components/sidebars/WaiterSideBar';
 import LYPSideBar from './components/sidebars/LYPSideBar';
+import ItemList from './pages/adminPages/ItemList';
+import TopBarInit from './components/topbars/TopBarInit';
 setupIonicReact();
 
 const App = () => {
@@ -74,7 +76,7 @@ const App = () => {
     {(user && user.role=='RECEPTIONIST') && <ReceptionSideBar />}
     {(user && user.role=='WAITER') && <WaiterSideBar />}
     {(user && user.role=='LYPREP') && <LYPSideBar />}
-    {(user) && <TopBar />}
+    {(user) ? <TopBar /> : <TopBarInit />}
     <IonReactRouter>
         <IonRouterOutlet id='main-content'>
           <Route exact path="/">
@@ -106,6 +108,7 @@ const App = () => {
           <AuthRoute roles={['WAITER']} exact path="/waiter/print-bill/:orderId/:tableNo" component={PrintBill} />
 
           <AuthRoute roles={['ADMIN']} exact path="/admin/sign-up" component={AdminSignUp} />
+          <AuthRoute roles={['ADMIN']} exact path="/admin/item-list" component={ItemList} />
 
         </IonRouterOutlet>
     </IonReactRouter>

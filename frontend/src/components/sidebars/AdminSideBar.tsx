@@ -19,6 +19,9 @@ const AdminSideBar: React.FC = () => {
             <IonItem routerLink="/admin/sign-up" routerDirection="none">
               <IonLabel>Add new employee detail</IonLabel>
             </IonItem>
+            <IonItem routerLink="/admin/item-list" routerDirection="none">
+              <IonLabel>Access Items Offered</IonLabel>
+            </IonItem>
           </IonMenuToggle>
         </IonList>
       </IonContent>

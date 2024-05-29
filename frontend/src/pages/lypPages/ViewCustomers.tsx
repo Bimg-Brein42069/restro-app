@@ -44,6 +44,7 @@ const ViewCustomers:React.FC = () => {
     }
     return (
         <div className="container">
+            <p><h1>Members List</h1></p>
             <IonGrid>
             {
                 customers.map((cust) => (

@@ -33,8 +33,8 @@ const AdminSignUp:React.FC = () => {
     }
     return (
         <IonPage>
-            <div>
-                <h1>Add new user</h1>
+            <div className="container">
+                <h1><b><center><span style={{fontSize:'25px'}}>Add details of new employee</span></center></b></h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <TextInput name='name' placeHolder="Enter name of new employee" label="Name" control={control} />
                     <TextInput name='email' placeHolder="Enter email-id of new employee" label="Email-ID" control={control} />
@@ -53,7 +53,7 @@ const AdminSignUp:React.FC = () => {
                             )}
                         />
                     </IonItem>
-                    <IonButton type='submit'>Sign Up</IonButton>
+                    <center><IonButton type='submit'>Sign Up</IonButton></center>
                 </form>
             </div>
         </IonPage>
