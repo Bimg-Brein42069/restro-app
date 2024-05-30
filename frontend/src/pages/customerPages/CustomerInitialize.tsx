@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CustomerWindow from "./CustomerWindow";
-import './CustomerWindow.css';
+import './CustomerInitialize.css';
 import { IonButton } from "@ionic/react";
 import { useHistory, useParams } from "react-router";
 import TopBarInit from "../../components/topbars/TopBarInit";
@@ -59,7 +59,6 @@ interface TableDetail{
                 throw new Error('Failed to find table')
             }
             const data=await response.json();
-            console.log(data)
             setOrderNo(data.orderNo)
         }catch(error){
             console.error('Error finding table')
@@ -122,7 +121,6 @@ interface TableDetail{
     if(!orderNo){
         return (
             <div className='container'>
-                <TopBarInit />
                 <strong>Please book table at reception and then order.</strong>
             </div>
         )
@@ -130,7 +128,6 @@ interface TableDetail{
 
     return (
         <div className='container'>
-            <TopBarInit />
             <Sendmsg />
         </div>
     );

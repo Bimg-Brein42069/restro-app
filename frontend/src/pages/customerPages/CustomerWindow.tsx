@@ -65,7 +65,6 @@ const CustomerWindow: React.FC = () => {
   function CustomerWindow2(){
     return (
       <div className="container">
-        <TopBar />
         {
           items.map(item => (
             <IonCard key={item.id}>

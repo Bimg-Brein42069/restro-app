@@ -1,7 +1,7 @@
 .container {
   text-align: left;
   position: absolute;
-  top: 5px !important;
+  top: -15px;
 }
 
 .container strong {

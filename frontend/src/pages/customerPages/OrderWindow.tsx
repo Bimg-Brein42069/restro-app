@@ -158,7 +158,6 @@ const OrderWindow: React.FC = () => {
   function OrderWindow2(){
     return (
       <div className="container">
-        <TopBarOrder/>
         {
           orditems.length>0 ?
           orditems.map(item => (

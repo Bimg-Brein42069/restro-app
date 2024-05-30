@@ -275,8 +275,8 @@ const TableListings: React.FC = () => {
     }, []);
     
     return (
-      <div className='row'>
-        <div className='column'>
+      <div className='table-row'>
+        <div className='table-column'>
         <h1><b>Waitlist:</b></h1>
         {
           waitlist
@@ -303,7 +303,7 @@ const TableListings: React.FC = () => {
           )
         }
         </div>
-        <div className='column2'>
+        <div className='table-column2'>
         <h1><b>Table status</b></h1>
         {
           tablestats.map((tbs) => {
@@ -323,19 +323,14 @@ const TableListings: React.FC = () => {
   function TableListings2(){
     return (
       <div className="container">
-        <div className="row">
-            <div className="column">
         <div className="ion-text-center">
         
-        <div className='table-listings'>
-            
+          <div className='table-listings'>           
             <TableListPoll />
           </div>
         </div>
         
-        </div>
-        
-        <div className="column3">
+        <div className="table-column3">
         <form onSubmit={handleSubmit(onSubmit)}>
             <IonGrid>
                 <IonRow>
@@ -381,7 +376,6 @@ const TableListings: React.FC = () => {
           
         </div>
         </div>
-      </div>
     );
   };
 

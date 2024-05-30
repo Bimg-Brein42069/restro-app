@@ -76,7 +76,7 @@ const ItemList:React.FC = () => {
     return (
         <IonPage>
             <div className="container">
-                <div className="row">
+                <div className="admin-row">
                     <div className="item-list">
                     <h1><b><span style={{paddingLeft: '10px'}}>Item List</span></b></h1>
                     {
@@ -96,9 +96,11 @@ const ItemList:React.FC = () => {
                         ))
                     }
                     </div>
-                <div className="column">
-                    <div className="row">
-                        <h1><b>Add new item</b></h1>
+                <div className="admin-column">
+                    <div className="admin-row">
+                        <div className="item-add-form-text">
+                            <h1><b>Add new item</b></h1>
+                        </div>
                         <form className='item-add-form' onSubmit={handleSubmit(addItem)}>
                             <TextInput name='name' placeHolder="Enter item name" label="Name" control={control} />
                             <TextInput name='price' placeHolder="Enter item price" label="Price" control={control} />
@@ -108,8 +110,10 @@ const ItemList:React.FC = () => {
                             <IonButton type="submit">Add Item +</IonButton>
                         </form>
                     </div>
-                    <div className="row">
-                        <h1><b>Change item {iid != -1 && iid}</b></h1>
+                    <div className="admin-row">
+                        <div className="item-add-form-text">
+                            <h1><b>Change item {iid != -1 && iid}</b></h1>
+                        </div>
                         { iid != -1 && 
                             <form className='item-add-form-2' onSubmit={handleSubmit(changeItem)}>
                                 <TextInput name='name' placeHolder="Enter item name" label="Name" control={control} />

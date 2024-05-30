@@ -25,29 +25,32 @@
   white-space: 'pre-wrap';
 }
 
-.row {
+.table-row {
   display: flex;
 }
 
-.column {
-  flex: 50%;
+.table-column {
+  position: absolute;
+  left: 0px;
+  right: 1000px;
 }
 
-.column2 {
-  flex: 50%;
+.table-column2 {
+  position: absolute;
+  top: 300px;
+  left: 950px;
+  right: 0px;
 }
 
-.column3 {
-  flex: 50%;
-}
-
-
-.column2:ion-grid{
-   width:50%
+.table-column3 {
+  position: absolute;
+  top: 20px;
+  left: 965px;
+  right: 10px;
 }
 
 
 .waitlist:table-list{
   position: absolute;
-  padding: 50%;
+  top: -20px;
 }

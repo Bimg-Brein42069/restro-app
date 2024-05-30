@@ -25,25 +25,24 @@
     white-space: 'pre-wrap';
   }
   
-  .row {
+  .admin-row {
     display: flex;
   }
   
-  .column {
-    flex: 50%;
-    padding: 20px;
-  }
-  
-  .column2 {
+  .admin-column {
     flex: 50%;
   }
   
-  .column3 {
+  .admin-column2 {
+    flex: 50%;
+  }
+  
+  .admin-column3 {
     flex: 50%;
   }
   
   
-  .column2:ion-grid{
+  .admin-column2:ion-grid{
      width:50%
   }
 
@@ -54,20 +53,29 @@
   
   .item-list{
     flex: 80%;
+    padding-left: 20px;
   }
 
   .item-add-form{
     align-items: end;
     padding-top: 60px;
     position: relative;
-    left:-150px;
+    left: 75px;
     width: 500px;
+  }
+
+  .item-add-form-text{
+    align-items: end;
+    padding-top: 60px;
+    position: relative;
+    left: 225px;
+    top: -60px;
   }
 
   .item-add-form-2{
     align-items: end;
     padding-top: 60px;
     position: relative;
-    left:-170px;
+    left: 65px;
     width: 500px;
   }
