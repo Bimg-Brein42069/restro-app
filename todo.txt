@@ -1,15 +1,4 @@
-Edge cases{
-	refresh causes waitlist to be emptied: do one of two things ->
-
-	1) Store waitlist in localstorage(fails if machine shuts down in between)
-
-	2) Store waitlist as table in backend:
-	
-	Approach:
-		Can store waitlist at the localstorage for now.
-
-	Then implement a filter in customer order items screen.
-}
+Implement a filter in customer order items screen.
 
 CSS work has begun.
 

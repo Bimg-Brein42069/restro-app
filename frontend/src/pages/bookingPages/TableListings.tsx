@@ -39,6 +39,7 @@ interface OrderDetail{
 
 const TableListings: React.FC = () => {
   const [waitlist,setWaitlist] = useState<WaitlistDetail []>([]);
+  const [frun,setFrun] = useState(0);
   const {control,handleSubmit,reset} = useForm({mode:'onSubmit'});
   const [maxseats,setMaxseats] = useState(0);
   const [ord,setOrd] = useState<OrderDetail>();
@@ -55,6 +56,17 @@ const TableListings: React.FC = () => {
     }catch(error){
       console.error("Error verifying customer")
     }
+  }
+
+  const getWaitlist = () => {
+    const tlist=localStorage.getItem('waitlist')
+    if(!tlist){
+      localStorage.setItem('waitlist',JSON.stringify(waitlist));
+      return ;
+    }
+    const wtlist=JSON.parse(tlist);
+    setWaitlist(wtlist);
+    setFrun(frun+1)
   }
 
 
@@ -75,6 +87,7 @@ const TableListings: React.FC = () => {
           data = {...data, id:uuidv4(),times:Date.now()}
           const wt=[...waitlist,data]
           setWaitlist(wt)
+          setFrun(frun+1)
         }
         else{
           alert('Too many seats selected: Please ask customers to split')
@@ -86,6 +99,27 @@ const TableListings: React.FC = () => {
         setTabl(tabl => JSON.parse(r_data))
       }
       reset();
+    }catch(error){
+      console.error("Error fetching data:", error);
+    }
+  }
+
+  const booktable2 = async(data:any) => {
+    try{
+      const response=await fetch('http://localhost:8082/reception/book-table?seats=' + data.seats,{
+        method:'PUT',
+        headers:{
+          'Content-Type':'application/json'
+        }
+      })
+      if(!response.ok){
+        throw new Error('Failed to book table')
+      }
+      const r_data=await response.text()
+      const wt=waitlist.filter(wat => wat.id !== data.id)
+      setWaitlist(wt)
+      setFrun(frun+1)
+      setTabl(tabl => JSON.parse(r_data))
     }catch(error){
       console.error("Error fetching data:", error);
     }
@@ -138,7 +172,7 @@ const TableListings: React.FC = () => {
 
   const assign_table = async() => {
     const table_data={...tabl,orderNo:ord?.id}
-
+    console.log(table_data)
     try{
       const response=await fetch('http://localhost:8082/reception/update-table',{
         method:'PUT',
@@ -152,7 +186,7 @@ const TableListings: React.FC = () => {
       }
       const r_data=await response.text()
     }catch(error){
-      console.error("Error updating table")
+      console.error("Error updating table" + error)
     }
   }
 
@@ -161,10 +195,22 @@ const TableListings: React.FC = () => {
   },[])
 
   useEffect(() => {
-    if(!tabl || tabl===undefined)
+    if(maxseats == 0)
+      return ;
+    getWaitlist();
+  },[maxseats])
+
+  useEffect(() => {
+    if(frun === 0)
+      return ;
+    setLocStor();
+  },[frun])
+
+  useEffect(() => {
+    if(!ord || ord===undefined)
       return ;
     assign_table()
-  },[tabl])
+  },[ord])
 
 
   const onSubmit = async (data:any) => {
@@ -173,6 +219,18 @@ const TableListings: React.FC = () => {
     create_order(data)
   } 
 
+  const onSubmit2 = async (data:any) => {
+    booktable2(data)
+    verify_order(data)
+    create_order(data)
+  }
+
+  const setLocStor = () => {
+    localStorage.setItem('waitlist',JSON.stringify(waitlist));
+  }
+
+  /*
+  Bad method: DO NOT UNCOMMENT
   const onSubmit2 = async (data:any) => {
     try{
       const response=await fetch('http://localhost:8082/reception/book-table?seats=' + data.seats,{
@@ -236,7 +294,7 @@ const TableListings: React.FC = () => {
     }
 
     const table_data={...tabl,orderNo:ord?.id}
-
+    console.log(table_data)
     try{
       const response=await fetch('http://localhost:8082/reception/update-table',{
         method:'PUT',
@@ -251,9 +309,9 @@ const TableListings: React.FC = () => {
       const r_data=await response.text()
       alert("Table no " + JSON.parse(r_data).tableNo + " has been booked succesfully")
     }catch(error){
-      console.error("Error updating table")
+      console.error("Error updating table:" + error)
     }
-  } 
+  } */
 
   function TableListPoll() {
 
