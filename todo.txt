@@ -1,20 +1,16 @@
-To integrate frontend with the backend, priority:
-
-Begin Authorization implementation.
-
-Authorization {
-	Give him the power to add new items to the menu.
-}
-
-After authorization - edge cases{
-	Implement filter in customer order items screen.
+Edge cases{
 	refresh causes waitlist to be emptied: do one of two things ->
 
 	1) Store waitlist in localstorage(fails if machine shuts down in between)
 
-	2) Store waitlist as table in backend(must implement cronjob that clears that at every opening)
+	2) Store waitlist as table in backend:
+	
+	Approach:
+		Can store waitlist at the localstorage for now.
+
+	Then implement a filter in customer order items screen.
 }
 
-After handling edge cases, begin improvements on the css such that it looks good.
+CSS work has begun.
 
-Note: bill generation has been handled keeping the restaurant hardware in mind. The json generated from the bill will be sent to the bill priting machine/service which will then process the json and print out the bill.
+Note: bill generation has been handled keeping a actual restaurant system in mind. The json generated from the bill will be sent to the bill printing machine/service which will then process the json and print out the bill. For now we are just printing the json in the console.
