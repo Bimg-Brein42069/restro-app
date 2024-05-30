@@ -6,6 +6,7 @@ import TextInput from "../components/TextInput";
 import { jwtDecode } from "jwt-decode";
 import { authLogin,authLogout } from "../redux/user/userSlice"
 import { useState } from "react";
+import './SignIn.css'
 
 
 const SignIn : React.FC = () => {
@@ -58,15 +59,14 @@ const SignIn : React.FC = () => {
     }
     return (
         <IonPage>
-            <div className='container'>
+            <div className='container p-3 max-w-4xl mx-auto'>
                 <h1><b><center>Sign-In</center></b></h1>
-                <IonText color='danger'>{msg}</IonText>
-                <form onSubmit={handleSubmit(onsubmit)}>
+                <form className='sign-in-bars' onSubmit={handleSubmit(onsubmit)}>
                     <TextInput name='email' placeHolder='Enter email' label='Email' control={control}/>
                     <TextInput name='password' placeHolder='Enter password' label='Password' control={control}/>
-                    <center><IonButton type='submit'>Sign In</IonButton></center>
+                    <center><IonButton className='sign-in-button' type='submit'>Sign In</IonButton></center>
                 </form>
-                
+                <center><p className='text-red-700 mt-5'>{msg}</p></center>
             </div>
         </IonPage>
     )

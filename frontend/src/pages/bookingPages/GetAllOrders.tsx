@@ -1,6 +1,7 @@
 import { IonGrid, IonRow, IonCol, IonCardContent, IonCard, IonButton, IonButtons, IonText } from "@ionic/react"
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router"
+import './GetAllOrders.css'
 
 interface OrderRecord{
     id:number,
@@ -157,7 +158,11 @@ const GetAllOrders:React.FC = () => {
     }
     return (
         <IonGrid>
-        <h1><b><center>Orders:</center></b></h1>
+        <div className="order-text">
+            <center><p><strong>Orders:</strong></p></center>
+        </div>
+        <p><br></br></p>
+        <center><b><IonText className="order-text-2">All orders:</IonText></b></center>
         <p><br></br></p>
         {
             orders.map((order) => (

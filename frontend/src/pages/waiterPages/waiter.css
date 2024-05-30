@@ -24,3 +24,11 @@
 .new-line {
   white-space: 'pre-wrap';
 }
+
+.waiter-list{
+  padding-top: 20px;
+}
+
+.waiter-list:strong{
+  font-size: 30px;
+}

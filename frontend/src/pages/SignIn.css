@@ -1,0 +1,9 @@
+.sign-in-bars{ 
+    position: relative;
+    left: 815px;
+    max-width: 300px;
+}
+
+.sign-in-button{
+    padding-top: 20px;
+}

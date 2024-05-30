@@ -1,6 +1,7 @@
 import { IonButton, IonItem, IonPage, IonSelect, IonSelectOption } from "@ionic/react";
 import { Controller, useForm } from "react-hook-form";
 import TextInput from "../../components/TextInput";
+import './AdminSignUp.css'
 
 const AdminSignUp:React.FC = () => {
     const {control,handleSubmit,reset,resetField} = useForm()
@@ -35,7 +36,7 @@ const AdminSignUp:React.FC = () => {
         <IonPage>
             <div className="container">
                 <h1><b><center><span style={{fontSize:'25px'}}>Add details of new employee</span></center></b></h1>
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form className="sign-up-form" onSubmit={handleSubmit(onSubmit)}>
                     <TextInput name='name' placeHolder="Enter name of new employee" label="Name" control={control} />
                     <TextInput name='email' placeHolder="Enter email-id of new employee" label="Email-ID" control={control} />
                     <TextInput name='password' placeHolder="Enter new password" label="New Password" control={control} />
@@ -53,7 +54,7 @@ const AdminSignUp:React.FC = () => {
                             )}
                         />
                     </IonItem>
-                    <center><IonButton type='submit'>Sign Up</IonButton></center>
+                    <center><IonButton className="sign-up-button" type='submit'>Sign Up</IonButton></center>
                 </form>
             </div>
         </IonPage>
